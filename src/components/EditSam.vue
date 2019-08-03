@@ -1,20 +1,36 @@
 <template>
   <div>
-    <Steps :current="current_this" size="small" style="margin: auto 50px;">
-        <Step title="提取"></Step>
-        <Step title="建库"></Step>
-        <Step title="测序"></Step>
-        <Step title="生信"></Step>
-        <Step title="报告"></Step>
-        <Step title="审核"></Step>
-        <Step title="最终优先度"></Step>
-        <Step title="备注"></Step>
-    </Steps>
-    <Button type="primary" @click="getApiData"
-            >刷新</Button>
-            <Button type="primary" @click="this.Submit1"
-            >保存</Button>
-    <Table :columns="columns1"
+    <Menu mode="horizontal" active-name="1" @on-select="toUrl">
+        <MenuItem name="1" to="/editsam/viewsam">
+            预览
+        </MenuItem>
+        <MenuItem name="distill">
+            提取
+        </MenuItem>
+        <MenuItem name="build">
+            建库
+        </MenuItem>
+        <MenuItem name="run">
+            上机
+        </MenuItem>
+        <MenuItem name="seq">
+            测序
+        </MenuItem>
+        <MenuItem name="analysis">
+            生信
+        </MenuItem>
+        <MenuItem name="report">
+            报告
+        </MenuItem>
+        <MenuItem name="check">
+            审核
+        </MenuItem>
+        <MenuItem name="note">
+            备注
+        </MenuItem>
+    </Menu>
+    <br>
+    <!-- <Table :columns="columns1"
            :loading="loading"
            height="550"
            :data="list_s"
@@ -25,7 +41,10 @@
            <Button type="primary" @click="setVal"
             >下一步</Button>
             <Button v-if='current_this===7' type="primary" @click="setDate"
-            >提交</Button>
+            >提交</Button> -->
+    <Content :style="{margin: '0 20px 0', background: '#fff', minHeight: '500px'}">
+                <router-view :key="key"/>
+            </Content>
   </div>
 </template>
 <script>
@@ -101,11 +120,12 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            if (this.edit_status[this.current_this]['build']) {
+            // if (this.edit_status[this.current_this]['build']) {
+            if (!params.row.实际建库完成时间) {
               return h('div', [
                 h('DatePicker', {
                   props: {
-                    placeholder: params.row.实际建库完成时间,
+                    placeholder: self.list_s[params.index].实际建库完成时间,
                     type: 'date',
                     style: 'width: 150px',
                     format: 'yyyy.MM.dd'
@@ -113,12 +133,33 @@ export default {
                   on: {
                     'on-change': (val) => {
                       self.list_s[params.index].实际建库完成时间 = val
+                      self.list_s[params.index].状态 = '建库完成'
                     }
                   }
                 })
               ])
             } else {
-              return h('div', params.row.实际建库完成时间)
+              return h('div',
+                [h('div',
+                  {style: {
+                    // marginRight: '1px'
+                    display: 'inline'
+                  }}, params.row.实际建库完成时间),
+                h('Button', {
+                  props: {
+                    shape: 'circle',
+                    icon: 'ios-create-outline'
+                  },
+                  style: {
+                  // marginRight: '1px'
+                    display: 'inline'
+                  },
+                  on: {
+                    click: () => {
+                      params.row.实际建库完成时间 = ''
+                    }
+                  }
+                })])
             }
           }
         },
@@ -410,6 +451,10 @@ export default {
     list_s () {
       return this.data1
     },
+    key () {
+    // 只要保证 key 唯一性就可以了，保证不同页面的 key 不相同
+      return this.$route.fullPath
+    },
     edit_status () {
       return {0: {'distill': true},
         1: {'build': true},
@@ -466,13 +511,20 @@ export default {
       this.$router.push({ path: `/snvlist/${this.data[index].Sample_name}` })
       console.log(this.data[index].Sample_name)
     },
-    setVal () {
-      localStorage.setItem('select_list', JSON.stringify(this.list_s))
-      this.Submit1()
+    currentAdd () {
       if (this.current_this < 7) { this.current_this++ } else {
         this.current_this = 0
       }
+    },
+    setVal () {
+      localStorage.setItem('select_list', JSON.stringify(this.list_s))
+      this.Submit1()
+      this.currentAdd()
       console.log(this.edit_status[this.current_this]['build'])
+    },
+    saveData () {
+      localStorage.setItem('select_list', JSON.stringify(this.list_s))
+      this.Submit1()
     },
     setDate () {
       localStorage.setItem('select_list', JSON.stringify(this.list_s))
@@ -485,6 +537,10 @@ export default {
       this.$refs.table.exportCsv({
         filename: '575流转'
       })
+    },
+    toUrl (name) {
+      console.log(name)
+      this.$router.push({name: 'StepSam', params: {step: name}})
     }
   },
   mounted () {
