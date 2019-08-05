@@ -1,17 +1,17 @@
 <template>
   <div>
-            <Button type="primary" @click="getApiData"
+<Button type="primary" @click="runSlect"
+            >开始流转</Button>
+<Button type="primary" @click="mySlect"
+            >删除</Button>
+<Button type="primary" @click="getApiData"
             >刷新</Button>
-            <Button type="primary" @click="exportData"
-            >导出</Button>
-            <!-- <div id="input-search"><Input search
-     autofocus
-     placeholder="输入样本编号" /></div> -->
-    <Table stripe
-    :columns="columns"
+            <Button type="primary" to="/add"
+            >新增</Button>
+    <Table stripe :columns="columns"
            :loading="loading"
            height="600"
-           :data="data"
+           :data="list_s"
            size="small"
            @on-selection-change='delVal'
            ref="table"></Table>
@@ -212,11 +212,7 @@ export default {
   },
   computed: {
     list_s () {
-      return this.$store.state.list_select
-    },
-    filename () {
-      let day = new Date()
-      return day.getFullYear() + '_' + (day.getMonth() + 1) + '_' + day.getDate() + '_' + '575流转'
+      return this.data
     }
   },
   methods: {
@@ -245,7 +241,6 @@ export default {
       this.my_selection.push(selection)
     },
     delVal (selection) {
-      // console.log(selection)
       this.my_selection = selection
     },
     Submit () {
@@ -260,31 +255,45 @@ export default {
           console.log(err)
         })
     },
-    SubmitFlask () {
-      this.Submit()
+    delSelect () {
+      const path = 'http://' + this.$store.state.hostIp + '/flow/api/list/del/'
+      this.axios
+        .post(path, {
+          selection: this.my_selection
+        })
+        .then((result) => {
+          console.log(result)
+        }).catch((err) => {
+          console.log(err)
+        })
     },
     show (index) {
       this.$router.push({ path: `/snvlist/${this.data[index].Sample_name}` })
       console.log(this.data[index].Sample_name)
     },
-    chEditStat () {
-      if (this.edit_stat) {
-        this.edit_stat = false
-      } else {
-        this.edit_stat = true
-      }
-    },
     mySlect () {
-      this.Submit()
-      this.$store.commit('addSelect', this.my_selection)
-      // this.$router.push({ path: `/editsam` })
-      console.log(this.list_s)
+      this.$Modal.confirm({
+        title: '确定删除所选样本',
+        onOk: () => {
+          this.$Message.info('成功删除,点击刷新')
+          this.delSelect()
+        },
+        onCancel: () => { this.$Message.info('取消删除') }
+      })
+    },
+    runSlect () {
+      this.$Modal.confirm({
+        title: '确定开始流转所选样本',
+        onOk: () => {
+          this.$Message.info('开始流转,点击流转中查看')
+          this.Submit()
+        },
+        onCancel: () => { this.$Message.info('取消流转') }
+      })
     },
     exportData () {
       this.$refs.table.exportCsv({
-        filename: this.filename,
-        data: this.my_selection,
-        columns: this.columns
+        filename: '575流转'
       })
     },
     strToDate (date) {
@@ -294,7 +303,7 @@ export default {
       // date eg:'2019.07.31'(str) days: 9(int)
       let s1 = date
       s1 = new Date(Date.parse(s1.replace(/\./g, '/')))
-      let s2 = new Date()// 当前日期：2017-04-24
+      let s2 = new Date()
       let day = s2.getTime() - s1.getTime()
       let time = parseInt(day / (1000 * 60 * 60 * 24))
       return days - time

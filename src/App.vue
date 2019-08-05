@@ -1,26 +1,23 @@
 <template>
-    <div id="app">
+    <div id="app" class='layout'>
         <Layout>
             <Header :style="{position: 'fixed', width: '100%'}">
                 <Menu mode="horizontal" theme="dark" active-name="1">
                     <div class="layout-logo"><router-link to="/"><img id="mglogo" src="./assets/mg.png"></router-link></div>
                     <div class="layout-nav">
-                        <MenuItem name="1">
-                            <Icon type="ios-navigate"></Icon>
-                            <router-link to="/samlist">总览</router-link>
+                        <MenuItem name="1" to="/samlist">
+                            总览
                         </MenuItem>
-                        <MenuItem name="2">
-                            <Icon type="ios-keypad"></Icon>
-                            <router-link to='/editsam'>流转中</router-link>
+                        <MenuItem name="2" to='/editsam/viewsam'>
+                            流转中
                         </MenuItem>
-                        <MenuItem name="3">
-                            <Icon type="ios-analytics"></Icon>
-                            <router-link to='/uploadfile'>文件上传</router-link>
+                        <MenuItem name="3" to='/uploadfile'>
+                            文件上传
                         </MenuItem>
-                        <MenuItem name="4">
-                            <Icon type="ios-paper"></Icon>
+                        <!-- <MenuItem name="4" to="/login">
+                            用户
                             <a @click="See(hostIP)">用户</a>
-                        </MenuItem>
+                        </MenuItem> -->
                     </div>
                 </Menu>
             </Header>
@@ -54,7 +51,7 @@ export default {
     .layout-logo{
         width: 100px;
         height: 30px;
-        background: #5b6270;
+        /* background: #5b6270; */
         border-radius: 3px;
         float: right;
         position: relative;
