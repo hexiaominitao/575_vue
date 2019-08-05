@@ -12,6 +12,7 @@ import ViewSam from '@/components/Sam/ViewSam'
 import StepSam from '@/components/Sam/StepSam'
 import DataAdmin from '@/components/Admin/AdminData'
 import EditAdmin from '@/components/Admin/EditAdmin'
+import AddAdmin from '@/components/Admin/AddAdmin'
 
 Vue.use(iView)
 Vue.use(Router)
@@ -64,16 +65,14 @@ export default new Router({
       component: DataAdmin
     },
     {
-      path: '/edit',
-      name: 'EditAdmin',
-      component: EditAdmin,
-      children: [
-        {
-          path: ':mgcode',
-          name: 'EditSam',
-          component: EditAdmin
-        }
-      ]
+      path: '/add',
+      name: 'AddAdmin',
+      component: AddAdmin
+    },
+    {
+      path: '/edit/:mgcode',
+      name: 'EditSam',
+      component: EditAdmin
     }
   ]
 })

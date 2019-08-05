@@ -6,7 +6,7 @@
             >删除</Button>
 <Button type="primary" @click="getApiData"
             >刷新</Button>
-            <Button type="primary" to="/edit"
+            <Button type="primary" to="/add"
             >新增</Button>
     <Table stripe :columns="columns"
            :loading="loading"
