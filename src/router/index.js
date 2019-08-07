@@ -71,7 +71,7 @@ export default new Router({
     },
     {
       path: '/edit/:mgcode',
-      name: 'EditSam',
+      name: 'EditAdmin',
       component: EditAdmin
     }
   ]

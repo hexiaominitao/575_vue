@@ -1,4 +1,4 @@
-src/components/Admin/AdminData.vue<template>
+<template>
 <div id="my-form">
     <Form :model="formItem" :label-width="100">
         <FormItem label="患者姓名">
@@ -32,7 +32,7 @@ src/components/Admin/AdminData.vue<template>
         </FormItem>
         <FormItem>
             <Button type="primary" @click="submit">提交</Button>
-            <Button style="margin-left: 8px" @click="back">取消</Button>
+            <Button style="margin-left: 8px">取消</Button>
         </FormItem>
     </Form>
 </div>
@@ -42,16 +42,27 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      data: []
+      data: [],
+      myData: {
+        患者姓名: '',
+        检测项目: '',
+        病理诊断: '',
+        申请单号: '',
+        迈景编号: '',
+        样本类型: '',
+        收样日期: '',
+        流转开始日期: '',
+        备注: ''
+      }
     }
   },
   computed: {
     myDate () {
-      return {收样日期: this.data[0].收样日期,
-        流转开始日期: this.data[0].流转开始日期}
+      return {收样日期: '',
+        流转开始日期: ''}
     },
     formItem () {
-      return this.data[0]
+      return this.myData
     }
   },
   methods: {
@@ -70,8 +81,8 @@ export default {
           console.log(error)
         })
     },
-    Submit1 () {
-      const path = 'http://' + this.$store.state.hostIp + '/flow/api/submit1/'
+    AddSam () {
+      const path = 'http://' + this.$store.state.hostIp + '/flow/api/addsam/'
       this.formItem.收样日期 = this.dateToString(this.myDate.收样日期)
       this.formItem.流转开始日期 = this.dateToString(this.myDate.流转开始日期)
       this.axios
@@ -85,9 +96,8 @@ export default {
         })
     },
     submit () {
-      this.Submit1()
-      // console.log(this.formItem.收样日期)
-      // console.log(this.dateToString(this.formItem.收样日期))
+      this.AddSam()
+      console.log(this.myDate.收样日期)
     },
     dateToString (date) {
       var year = date.getFullYear()
@@ -101,13 +111,10 @@ export default {
       }
       var dateTime = year + '.' + month + '.' + day
       return dateTime
-    },
-    back () {
-      this.$router.go(-1)
     }
   },
   mounted () {
-    this.getData()
+    console.log('hah')
   }
 }
 </script>

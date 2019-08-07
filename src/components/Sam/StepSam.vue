@@ -337,7 +337,25 @@ export default {
           'title': '备注',
           'key': '备注',
           'width': 120,
-          'sortable': true
+          'sortable': true,
+          render: (h, params) => {
+            // eslint-disable-next-line no-unused-vars
+            let self = this
+            return h('div', [
+              h('Input', {
+                props: {
+                  placeholder: self.data5[params.index].备注,
+                  type: 'text',
+                  style: 'width: 150px'
+                },
+                on: {
+                  'on-change': (val) => {
+                    self.data5[params.index].审核完成时间 = val
+                  }
+                }
+              })
+            ])
+          }
         }, {
           'title': '预计完成时间',
           'key': '预计完成时间',
@@ -382,8 +400,8 @@ export default {
   computed: {
     data5 () {
       let myData = this.data_all
-      let currenStep = this.$route.params.step
-      return myData[currenStep]
+      // let currenStep = this.$route.params.step
+      return myData['distill']
     }
   },
   watch: {
