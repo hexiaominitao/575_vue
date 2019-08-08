@@ -1,4 +1,4 @@
-src/components/Admin/AdminData.vue<template>
+<template>
 <div id="my-form">
     <Form :model="formItem" :label-width="100">
         <FormItem label="患者姓名">
@@ -46,12 +46,12 @@ export default {
     }
   },
   computed: {
+    formItem () {
+      return this.data[0]
+    },
     myDate () {
       return {收样日期: this.data[0].收样日期,
         流转开始日期: this.data[0].流转开始日期}
-    },
-    formItem () {
-      return this.data[0]
     }
   },
   methods: {
@@ -86,21 +86,28 @@ export default {
     },
     submit () {
       this.Submit1()
-      // console.log(this.formItem.收样日期)
-      // console.log(this.dateToString(this.formItem.收样日期))
+      this.$Message.info('提交成功')
+      // this.formItem.收样日期 = this.dateToString(this.myDate.收样日期)
+      // this.formItem.流转开始日期 = this.dateToString(this.myDate.流转开始日期)
+      // console.log(this.formItem.流转开始日期)
+      // console.log(this.dateToString(new Date()))
     },
     dateToString (date) {
-      var year = date.getFullYear()
-      var month = (date.getMonth() + 1).toString()
-      var day = (date.getDate()).toString()
-      if (month.length === 1) {
-        month = '0' + month
+      if (date instanceof Date) {
+        var year = date.getFullYear()
+        var month = (date.getMonth() + 1).toString()
+        var day = (date.getDate()).toString()
+        if (month.length === 1) {
+          month = '0' + month
+        }
+        if (day.length === 1) {
+          day = '0' + day
+        }
+        var dateTime = year + '.' + month + '.' + day
+        return dateTime
+      } else {
+        return date
       }
-      if (day.length === 1) {
-        day = '0' + day
-      }
-      var dateTime = year + '.' + month + '.' + day
-      return dateTime
     },
     back () {
       this.$router.go(-1)
