@@ -43,7 +43,7 @@
             <Button v-if='current_this===7' type="primary" @click="setDate"
             >提交</Button> -->
     <Content :style="{margin: '0 20px 0', background: '#fff', minHeight: '500px'}">
-                <router-view :key="key"/>
+                <router-view />
             </Content>
   </div>
 </template>

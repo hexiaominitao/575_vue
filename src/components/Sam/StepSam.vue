@@ -100,22 +100,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].提取完成日期,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].提取完成日期 = val
-                    self.data5[params.index].状态 = '提取完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'distill') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].提取完成日期,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].提取完成日期 = val
+                      self.data5[params.index].状态 = '提取完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].提取完成日期)
+            }
           }
         },
         {
@@ -126,22 +131,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].建库完成日期,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].建库完成日期 = val
-                    self.data5[params.index].状态 = '建库完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'build') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].建库完成日期,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].建库完成日期 = val
+                      self.data5[params.index].状态 = '建库完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].建库完成日期)
+            }
           }
         },
         {
@@ -152,22 +162,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].实际上机日期,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].实际上机日期 = val
-                    self.data5[params.index].状态 = '上机完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'run') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].实际上机日期,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].实际上机日期 = val
+                      self.data5[params.index].状态 = '上机完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].实际上机日期)
+            }
           }
         },
         {
@@ -188,22 +203,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].测序完成日期,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].测序完成日期 = val
-                    self.data5[params.index].状态 = '测序完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'seq') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].测序完成日期,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].测序完成日期 = val
+                      self.data5[params.index].状态 = '测序完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].测序完成日期)
+            }
           }
         },
         {
@@ -214,22 +234,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].生信完成日期,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].生信完成日期 = val
-                    self.data5[params.index].状态 = '生信完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'analysis') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].生信完成日期,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].生信完成日期 = val
+                      self.data5[params.index].状态 = '生信完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].生信完成日期)
+            }
           }
         },
         {
@@ -256,22 +281,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].报告完成时间,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].报告完成时间 = val
-                    self.data5[params.index].状态 = '报告完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'report') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].报告完成时间,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].报告完成时间 = val
+                      self.data5[params.index].状态 = '报告完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].报告完成时间)
+            }
           }
         },
         {
@@ -298,22 +328,27 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('DatePicker', {
-                props: {
-                  placeholder: self.data5[params.index].审核完成时间,
-                  type: 'date',
-                  style: 'width: 150px',
-                  format: 'yyyy.MM.dd'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].审核完成时间 = val
-                    self.data5[params.index].状态 = '审核完成'
+            let currenStep = this.$route.params.step
+            if (currenStep === 'check') {
+              return h('div', [
+                h('DatePicker', {
+                  props: {
+                    placeholder: self.data5[params.index].审核完成时间,
+                    type: 'date',
+                    style: 'width: 150px',
+                    format: 'yyyy.MM.dd'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].审核完成时间 = val
+                      self.data5[params.index].状态 = '审核完成'
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].审核完成时间)
+            }
           }
         },
         {
@@ -341,20 +376,25 @@ export default {
           render: (h, params) => {
             // eslint-disable-next-line no-unused-vars
             let self = this
-            return h('div', [
-              h('Input', {
-                props: {
-                  placeholder: self.data5[params.index].备注,
-                  type: 'text',
-                  style: 'width: 150px'
-                },
-                on: {
-                  'on-change': (val) => {
-                    self.data5[params.index].审核完成时间 = val
+            let currenStep = this.$route.params.step
+            if (currenStep === 'note') {
+              return h('div', [
+                h('Input', {
+                  props: {
+                    placeholder: self.data5[params.index].备注,
+                    type: 'text',
+                    style: 'width: 150px'
+                  },
+                  on: {
+                    'on-change': (val) => {
+                      self.data5[params.index].备注 = val
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            } else {
+              return h('div', self.data5[params.index].备注)
+            }
           }
         }, {
           'title': '预计完成时间',
@@ -462,7 +502,11 @@ export default {
       let s2 = new Date()// 当前日期：2017-04-24
       let day = s2.getTime() - s1.getTime()
       let time = parseInt(day / (1000 * 60 * 60 * 24))
-      return days - time
+      if (days - time > 0) {
+        return days - time
+      } else {
+        return 0
+      }
     },
     selSam (selection) {
       this.my_selection = selection

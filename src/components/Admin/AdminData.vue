@@ -319,7 +319,11 @@ export default {
       let s2 = new Date()
       let day = s2.getTime() - s1.getTime()
       let time = parseInt(day / (1000 * 60 * 60 * 24))
-      return days - time
+      if (days - time > 0) {
+        return days - time
+      } else {
+        return 0
+      }
     }
   },
   mounted () {
