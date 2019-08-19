@@ -401,7 +401,7 @@ export default {
     data5 () {
       let myData = this.data_all
       // let currenStep = this.$route.params.step
-      return myData['distill']
+      return myData['data']
     }
   },
   watch: {
