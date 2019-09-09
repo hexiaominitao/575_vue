@@ -74,7 +74,11 @@ export default {
       let s2 = new Date()// 当前日期：2017-04-24
       let day = s2.getTime() - s1.getTime()
       let time = parseInt(day / (1000 * 60 * 60 * 24))
-      return days - time
+      if (days - time > 0) {
+        return days - time
+      } else {
+        return 0
+      }
     },
     calDays1 (date1, date2) {
       // date eg:'2019.07.31'(str) days: 9(int)

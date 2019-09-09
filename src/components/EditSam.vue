@@ -30,18 +30,6 @@
         </MenuItem>
     </Menu>
     <br>
-    <!-- <Table :columns="columns1"
-           :loading="loading"
-           height="550"
-           :data="list_s"
-           size="small"
-           ref="table"></Table>
-           <Button v-if='current_this!==0' type="primary" @click="current_this--"
-            >上一步</Button>
-           <Button type="primary" @click="setVal"
-            >下一步</Button>
-            <Button v-if='current_this===7' type="primary" @click="setDate"
-            >提交</Button> -->
     <Content :style="{margin: '0 20px 0', background: '#fff', minHeight: '500px'}">
                 <router-view :key="key"/>
             </Content>
