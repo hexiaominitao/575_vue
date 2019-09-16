@@ -371,6 +371,9 @@ export default {
       this.data_all[index].审核完成时间 = event
       this.data_all[index].状态 = '审核完成'
     },
+    saveDate_note (index, event) {
+      this.data_all[index].备注 = event
+    },
     handleRender (item) {
       this.$Modal.confirm({
         title: '终止' + item + '的流转',

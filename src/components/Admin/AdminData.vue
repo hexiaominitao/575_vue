@@ -1,13 +1,15 @@
 <template>
   <div>
+    <span id='top-bar'>
 <Button type="primary" @click="runSlect"
             >开始流转</Button>
 <Button type="primary" @click="mySlect"
             >删除</Button>
-<Button type="primary" @click="getApiData"
+<Button type="primary" @click="getApiData(1)"
             >刷新</Button>
             <Button type="primary" to="/add"
             >新增</Button>
+            <Input id="input-search" v-model='val' @on-search="remoteMethod1" search placeholder="输入迈景编号" /></span>
     <Table stripe :columns="columns"
            :loading="loading"
            height="600"
@@ -15,18 +17,23 @@
            size="small"
            @on-selection-change='delVal'
            ref="table"></Table>
+           <Page :total="total" size="small" :page-size="15" show-elevator
+            @on-change="setPage"/>
   </div>
 </template>
 <script>
-import axios from 'axios'
 export default {
   name: 'SamList',
   data () {
     return {
       hostIP: 'http://' + this.$store.state.hostIp,
       filter_mg: [],
+      data_all: [],
+      val: '',
+      my_data: [],
       edit_stat: false,
       input_value: [],
+      total: 0,
       columns: [
         {
           type: 'selection',
@@ -225,25 +232,42 @@ export default {
   },
   computed: {
     list_s () {
-      return this.data
+      if (this.val) {
+        return this.my_data
+      } else { return this.data }
     }
   },
   methods: {
-    getApiData () {
-      this.loading = true
-      const path = 'http://' + this.$store.state.hostIp + '/flow/api/list/'
-      axios
+    getAllData () {
+      const path = 'http://' + this.$store.state.hostIp + '/flow/api/list'
+      this.axios
         .get(path)
         .then(response => {
-          this.data = response.data.data
-          this.filter_mg = response.data.filter_mg
-          this.loading = false
-          console.log('成功')
-          console.log(response.data.filter_mg)
+          this.data_all = response.data.data
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    getApiData (page) {
+      this.loading = true
+      const path = 'http://' + this.$store.state.hostIp + '/flow/api/list/page/' + page
+      this.axios
+        .get(path)
+        .then(response => {
+          this.data = response.data.data
+          this.total = response.data.total
+          this.loading = false
+          console.log('成功')
+          console.log(response.data.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    setPage (page) {
+      this.page = page
+      this.getApiData(page)
     },
     getSelecVal (selection) {
       console.log(selection)
@@ -324,10 +348,18 @@ export default {
       } else {
         return 0
       }
+    },
+    remoteMethod1 (query) {
+      if (query !== '') {
+        this.my_data = this.data.filter(item => item.迈景编号.toLowerCase().indexOf(query.toLowerCase()) > -1)
+      } else {
+        this.my_data = this.list_s
+      }
     }
   },
   mounted () {
-    this.getApiData()
+    this.getApiData(1)
+    this.getAllData()
     this.$store.commit('addSelect', '')
   }
 }
@@ -335,6 +367,6 @@ export default {
 <style scoped>
 #input-search{
     width: 300px;
-    float: left;
+    float: right;
 }
 </style>

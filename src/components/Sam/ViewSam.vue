@@ -7,7 +7,7 @@
             <p><b>流转开始日期</b>: {{ item.流转开始日期 }}</p>
             <p><b>预计报告完成日期</b>: {{ item.预计完成时间 }}</p>
             <p><b>当前状态:</b> {{ item.状态 }}</p>
-            <Progress :percent="dates(item)" status="active" />
+            <!-- <Progress :percent="dates(item)" status="active" /> -->
         </Card>
     </div></Col>
     </Row>
