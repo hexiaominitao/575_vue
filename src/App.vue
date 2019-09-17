@@ -14,13 +14,13 @@
                         <MenuItem name="3" to='/uploadfile'>
                             文件上传
                         </MenuItem>
-                        <MenuItem name="4" to="/login">
+                        <MenuItem name="4" to="/seq">
                             上机信息
                         </MenuItem>
                     </div>
                 </Menu>
             </Header>
-            <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '600px'}">
+            <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '600px' , width: '98%'}">
                 <router-view />
             </Content>
             <Footer class="layout-footer-center">&copy; MyGene</Footer>

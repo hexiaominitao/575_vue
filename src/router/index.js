@@ -63,6 +63,28 @@ export default new Router({
       path: '/edit/:mgcode',
       name: 'EditAdmin',
       component: () => import('@/components/Admin/AddAdmin')
+    },
+    {
+      path: '/seq',
+      name: 'Run',
+      component: () => import('@/components/Seq/Run'),
+      children: [
+        {
+          path: 'viewrun',
+          name: 'ViewRun',
+          component: () => import('@/components/Seq/RunInfo')
+        },
+        {
+          path: 'uplaodrun',
+          name: 'UploadRun',
+          component: () => import('@/components/Seq/UploadRun')
+        },
+        {
+          path: 'viewseq/:mg_id',
+          name: 'ViewSeq',
+          component: () => import('@/components/Seq/SeqInfo')
+        }
+      ]
     }
   ]
 })
