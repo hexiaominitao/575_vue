@@ -1,18 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import Register from '@/components/Register'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
-import SamList from '@/components/SamList'
-import FormUpdata from '@/components/FormUpdata'
-import UploadFile from '@/components/UploadFile'
-import EditSam from '@/components/EditSam'
-import ViewSam from '@/components/Sam/ViewSam'
-import StepSam from '@/components/Sam/StepSam'
-import DataAdmin from '@/components/Admin/AdminData'
-import EditAdmin from '@/components/Admin/EditAdmin'
-import AddAdmin from '@/components/Admin/AddAdmin'
 
 Vue.use(iView)
 Vue.use(Router)
@@ -22,7 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: () => import('@/components/Home')
     }, {
       path: '/register',
       name: ' Register',
@@ -30,28 +20,28 @@ export default new Router({
     }, {
       path: '/samlist',
       name: 'SamList',
-      component: SamList
+      component: () => import('@/components/SamList')
     }, {
       path: '/formupdata',
       name: 'FormUpdata',
-      component: FormUpdata
+      component: () => import('@/components/FormUpdata')
     }, {
       path: '/uploadfile',
       name: 'UploadFile',
-      component: UploadFile
+      component: () => import('@/components/UploadFile')
     }, {
       path: '/editsam',
       name: 'EditSam',
-      component: EditSam,
+      component: () => import('@/components/EditSam'),
       children: [
         {
           path: 'viewsam',
           name: 'ViewSam',
-          component: ViewSam
+          component: () => import('@/components/Sam/ViewSam')
         }, {
           path: 'stepsam/:step',
           name: 'StepSam',
-          component: StepSam
+          component: () => import('@/components/Sam/StepSam')
         }
       ]
     },
@@ -62,17 +52,17 @@ export default new Router({
     }, {
       path: '/admin',
       name: 'DataAdmin',
-      component: DataAdmin
+      component: () => import('@/components/Admin/AdminData')
     },
     {
       path: '/add',
       name: 'AddAdmin',
-      component: AddAdmin
+      component: () => import('@/components/Admin/EditAdmin')
     },
     {
       path: '/edit/:mgcode',
       name: 'EditAdmin',
-      component: EditAdmin
+      component: () => import('@/components/Admin/AddAdmin')
     }
   ]
 })

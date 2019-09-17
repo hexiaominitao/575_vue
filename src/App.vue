@@ -14,10 +14,9 @@
                         <MenuItem name="3" to='/uploadfile'>
                             文件上传
                         </MenuItem>
-                        <!-- <MenuItem name="4" to="/login">
-                            用户
-                            <a @click="See(hostIP)">用户</a>
-                        </MenuItem> -->
+                        <MenuItem name="4" to="/login">
+                            上机信息
+                        </MenuItem>
                     </div>
                 </Menu>
             </Header>
