@@ -16,7 +16,12 @@
            :data="list_s"
            size="small"
            @on-selection-change='delVal'
-           ref="table"></Table>
+           ref="table">
+      <template slot-scope="{ row }" slot="迈景编号">
+        <div @click="editSam(row.迈景编号)">{{ row.迈景编号 }}
+        </div>
+      </template>
+    </Table>
            <Page :total="total" size="small" :page-size="15" show-elevator
             @on-change="setPage"/>
   </div>
@@ -74,23 +79,23 @@ export default {
         },
         {
           'title': '迈景编号',
-          'key': '迈景编号',
+          'slot': '迈景编号',
           'width': 120,
           'sortable': true,
-          'fixed': 'left',
-          render: (h, params) => {
-            return h('div', [
-              h('div', {
-                on: {
-                  click: () => {
-                    // eslint-disable-next-line standard/object-curly-even-spacing
-                    this.$router.push({ name: `EditAdmin`, params: { mgcode: params.row.迈景编号 }})
-                    this.$Message.info('点击了' + params.row.迈景编号)
-                  }
-                }
-              }, params.row.迈景编号)
-            ])
-          }
+          'fixed': 'left'
+          // render: (h, params) => {
+          //   return h('div', [
+          //     h('div', {
+          //       on: {
+          //         click: () => {
+          //           // eslint-disable-next-line standard/object-curly-even-spacing
+          //           this.$router.push({ name: `EditAdmin`, params: { mgcode: params.row.迈景编号 }})
+          //           this.$Message.info('点击了' + params.row.迈景编号)
+          //         }
+          //       }
+          //     }, params.row.迈景编号)
+          //   ])
+          // }
         },
         {
           'title': '样本类型',
@@ -277,6 +282,10 @@ export default {
       console.log(selection)
       this.my_selection.push(selection)
     },
+    editSam (mgcode) {
+      this.$router.push({name: `EditAdmin`, params: { mgcode: mgcode }})
+      this.$Message.info('点击了' + mgcode)
+    },
     delVal (selection) {
       this.my_selection = selection
     },
@@ -359,7 +368,7 @@ export default {
   },
   mounted () {
     this.getApiData(1)
-    this.getAllData()
+    // this.getAllData()
     this.$store.commit('addSelect', '')
   }
 }

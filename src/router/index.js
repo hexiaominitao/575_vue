@@ -57,12 +57,12 @@ export default new Router({
     {
       path: '/add',
       name: 'AddAdmin',
-      component: () => import('@/components/Admin/EditAdmin')
+      component: () => import('@/components/Admin/AddAdmin')
     },
     {
       path: '/edit/:mgcode',
       name: 'EditAdmin',
-      component: () => import('@/components/Admin/AddAdmin')
+      component: () => import('@/components/Admin/EditAdmin')
     },
     {
       path: '/seq',
