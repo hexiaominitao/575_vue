@@ -2,8 +2,8 @@
   <div>
     <Row>
       <Col span='6'>Run:<strong>{{ title.name }}</strong></Col>
-      <Col span='6'>上机时间:<strong>{{ title.start_T }}</strong></Col>
-      <Col span='6'>下机时间:<strong>{{ title.end_T }}</strong></Col>
+      <Col span='6'>上机时间:<strong>{{ dateToString(title.start_T) }}</strong></Col>
+      <Col span='6'>下机时间:<strong>{{ dateToString(title.end_T) }}</strong></Col>
       <Col span='6'><Button type="primary" @click="downloadFile" >生成SampleSheet</Button></Col>
     </Row>
     <br>
@@ -58,11 +58,37 @@ export default {
           this.title = response.data.run
           this.seq_data = response.data.seq
           this.loading = false
-          console.log(response.data.run)
+          console.log(this.dateToString(this.title.start_T))
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    dateToString (str) {
+      var date = new Date(str + '+0800')
+      if (date instanceof Date) {
+        var year = date.getFullYear()
+        var month = (date.getMonth() + 1).toString()
+        var day = (date.getDate()).toString()
+        var hour = (date.getHours()).toString()
+        var min = (date.getMinutes()).toString()
+        if (month.length === 1) {
+          month = '0' + month
+        }
+        if (day.length === 1) {
+          day = '0' + day
+        }
+        if (hour.length === 1) {
+          hour = '0' + hour
+        }
+        if (min.length === 1) {
+          min = '0' + min
+        }
+        var dateTime = year + '.' + month + '.' + day + ' ' + hour + ':' + min
+        return dateTime
+      } else {
+        return date
+      }
     },
     downloadFile () {
       const path = 'http://' + this.$store.state.hostIp + '/flow/api/download/' + this.$route.params.mg_id
@@ -70,7 +96,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route.params.mg_id)
     this.getData(this.$route.params.mg_id)
   }
 }
