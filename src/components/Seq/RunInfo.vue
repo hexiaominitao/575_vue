@@ -1,6 +1,12 @@
 <template>
 <div>
 <Table border height='520' :columns='columns' :data='data'>
+<template slot-scope="{ row }" slot="start_T">
+<div>{{ dateToString(row.start_T) }}</div>
+</template>
+<template slot-scope="{ row }" slot="end_T">
+<div>{{ dateToString(row.end_T) }}</div>
+</template>
       </Table>
     <Page :total="total" size="small" :page-size="20" show-elevator
     @on-change="setPage"/>
@@ -33,11 +39,11 @@ export default {
         },
         {
           title: '上机时间',
-          key: 'start_T'
+          slot: 'start_T'
         },
         {
           title: '下机时间',
-          key: 'end_T'
+          slot: 'end_T'
         },
         {
           title: '测序平台',
@@ -62,6 +68,32 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    dateToString (str) {
+      var date = new Date(str + '+0800')
+      if (date instanceof Date) {
+        var year = date.getFullYear()
+        var month = (date.getMonth() + 1).toString()
+        var day = (date.getDate()).toString()
+        var hour = (date.getHours()).toString()
+        var min = (date.getMinutes()).toString()
+        if (month.length === 1) {
+          month = '0' + month
+        }
+        if (day.length === 1) {
+          day = '0' + day
+        }
+        if (hour.length === 1) {
+          hour = '0' + hour
+        }
+        if (min.length === 1) {
+          min = '0' + min
+        }
+        var dateTime = year + '.' + month + '.' + day + ' ' + hour + ':' + min
+        return dateTime
+      } else {
+        return date
+      }
     },
     setPage (page) {
       this.page = page
