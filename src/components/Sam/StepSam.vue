@@ -171,7 +171,7 @@ export default {
         },
         {
           'title': '测序完成日期',
-          'key': '测序完成日期',
+          'slot': '测序完成日期',
           'width': 150,
           'sortable': true
         },
