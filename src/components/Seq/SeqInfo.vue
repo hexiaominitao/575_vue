@@ -8,6 +8,9 @@
     </Row>
     <br>
     <Table border height='520' :columns='seq_columns' :data='seq_data'>
+      <template slot-scope="{ row, index }" slot="action">
+            <Button type="error" size="small" @click="remove(index)">删除</Button>
+        </template>
       </Table>
   </div>
 </template>
@@ -34,6 +37,10 @@ export default {
         {
           title: '备注',
           key: 'note'
+        },
+        {
+          title: '操作',
+          slot: 'action'
         }
       ]
     }
@@ -63,6 +70,29 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    delRun (index) {
+      const path = 'http://' + this.$store.state.hostIp + '/flow/api/seq_info/del'
+      this.axios
+        .post(path, {
+          selection: this.seq_data[index]
+        }).then((result) => {
+          console.log(result)
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    remove (index) {
+      this.$Modal.confirm({
+        title: '确定删除所选样本!!!!',
+        content: '<p>删除后无法恢复,请慎重操作!!!!</p>',
+        onOk: () => {
+          this.$Message.info('删除成功')
+          this.delRun(index)
+          this.seq_data.splice(index, 1)
+        },
+        onCancel: () => { this.$Message.info('取消') }
+      })
     },
     dateToString (str) {
       var date = new Date(str + '+0800')
